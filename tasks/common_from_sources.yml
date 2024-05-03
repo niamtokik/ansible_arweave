@@ -1,0 +1,57 @@
+- name: Ensure Arweave git directory exists under installation path
+  ansible.builtin.file:
+    state: directory
+    path: '{{ installation_path }}/arweave'
+    mode: '0755'
+    owner: '{{ user }}'
+    group: '{{ group }}'
+  vars:
+      installation_path: '{{ arweave["installation_path"] | default(__arweave["installation_path"]) }}'
+      group: '{{ arweave["group"] | default(__arweave["group"]) }}'
+      user:  '{{ arweave["user"] | default(__arweave["user"]) }}'
+
+- name: Clone latest Arweave version
+  become: true
+  become_user: '{{ user }}'
+  become_method: sudo
+  ansible.builtin.git:
+    repo: '{{ repository }}'
+    dest: '{{ installation_path }}/arweave'
+    version: '{{ branch }}'
+  vars:
+      repository: '{{ arweave["repository"] | default(__arweave["repository"]) }}'
+      installation_path: '{{ arweave["installation_path"] | default(__arweave["installation_path"]) }}'
+      user: '{{ arweave["user"] | default(__arweave["user"]) }}'
+      branch: '{{ arweave["branch"] | default(__arweave["branch"]) }}'
+
+- name: Fetch Arweave dependencies from source
+  become: true
+  become_user: '{{ user }}'
+  become_method: sudo
+  ansible.builtin.shell:
+    chdir: '{{ installation_path }}/arweave'
+    cmd: ./rebar3 get-deps
+  vars:
+      installation_path: '{{ arweave["installation_path"] | default(__arweave["installation_path"]) }}'
+      user: '{{ arweave["user"] | default(__arweave["user"]) }}'
+
+- name: Compile Arweave sources
+  become: true
+  become_user: '{{ user }}'
+  become_method: sudo
+  ansible.builtin.shell:
+    chdir: '{{ installation_path }}/arweave'
+    cmd: ./rebar3 compile
+  vars:
+      installation_path: '{{ arweave["installation_path"] | default(__arweave["installation_path"]) }}'
+      user: '{{ arweave["user"] | default(__arweave["user"]) }}'
+
+- name: Create Arweave release from sources
+  become: true
+  become_user: '{{ user }}'
+  ansible.builtin.shell:
+    chdir: '{{ installation_path }}/arweave'
+    cmd: ./rebar3 release
+  vars:
+      installation_path: '{{ arweave["installation_path"] | default(__arweave["installation_path"]) }}'
+      user: '{{ arweave["user"] | default(__arweave["user"]) }}'

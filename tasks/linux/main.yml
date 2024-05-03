@@ -1,0 +1,34 @@
+- name: Deploy /etc/sysctl.conf
+  ansible.builtin.lineinfile:
+    path: /etc/sysctl.conf
+    regexp: '^fs.file-max='
+    line: 'fs.file-max={{ nofile_limit }}'
+  notify:
+    - reload sysctl
+  vars:
+      nofile_limit: "{{ arweave['security']['limits']['nofile']['soft'] | default(__arweave['security']['limits']['nofile']['soft']) }}"
+
+- name: Ensure /etc/security exists
+  ansible.builtin.file:
+    path: /etc/security
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+
+- name: Ensure /etc/security/limits.conf is correctly configured
+  ansible.builtin.file:
+    path: /etc/security/limits.conf
+    mode: '0644'
+    owner: root
+    group: root
+
+- name: deploy /etc/security/limits.conf
+  ansible.builtin.lineinfile:
+    path: /etc/security/limits.conf
+    regexp: '^{{ user }} soft nofile'
+    line: '{{ user }} soft nofile {{ nofile_limit }}'
+  vars:
+      user:  '{{ arweave["user"] | default(__arweave["user"]) }}'
+      nofile_limit: "{{ arweave['security']['limits']['nofile']['soft'] | default(__arweave['security']['limits']['nofile']['soft']) }}"
+

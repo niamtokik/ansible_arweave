@@ -1,0 +1,41 @@
+- name: Check if arweave must be installed
+  ansible.builtin.fail:
+    msg: "arweave variables is not set. can't deploy"
+  when: (arweave is not defined)
+
+- name: Check minimum cpu for mining
+  ansible.builtin.fail:
+    msg: "not enough cpu available"
+  when: |
+    (
+          ansible_facts['processor_cores'] < __arweave['facts']['mining']['cpu']
+      and arweave['mining'] is defined
+    )
+
+- name: Check minimum ram for mining
+  ansible.builtin.fail:
+    msg: "not enough ram available"
+  when: |
+    (
+          ansible_facts['memory_mb']['real']['total'] < __arweave['facts']['mining']['ram']
+      and arweave['mining'] is defined
+    )
+
+- name: include common tasks
+  ansible.builtin.include_tasks:
+    file: common.yml
+
+- name: include common linux tasks
+  ansible.builtin.include_tasks:
+    file: linux/main.yml
+  when: (ansible_facts['system'] == 'Linux')
+
+- name: include ubuntu tasks
+  ansible.builtin.include_tasks:
+    file: ubuntu/22.04/main.yml
+  when: (ansible_facts['distribution'] == "Ubuntu" and
+         ansible_facts['distribution_version'] == "22.04")
+
+- name: include installation from source
+  ansible.builtin.include_tasks:
+    file: common_from_sources.yml

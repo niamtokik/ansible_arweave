@@ -1,0 +1,32 @@
+######################################################################
+# Common Tasks for all OS
+######################################################################
+- name: Ensure Arweave installation path exists
+  ansible.builtin.file:
+    state: directory
+    path: '{{ installation_path }}'
+    mode: '0755'
+    owner: root
+    group: root
+  vars:
+      installation_path: '{{ arweave["installation_path"] | default(__arweave["installation_path"]) }}'
+
+- name: Ensure Arweave group exists
+  ansible.builtin.group:
+    name: '{{ group }}'
+    system: true
+  vars:
+      group: '{{ arweave["group"] | default(__arweave["group"]) }}'
+
+- name: Ensure Arweave user exists
+  ansible.builtin.user:
+    name: '{{ user }}'
+    group: '{{ group }}'
+    system: true
+    shell: /usr/sbin/nologin
+    home: '{{ installation_path }}'
+    comment: arweave
+  vars:
+      group: '{{ arweave["group"] | default(__arweave["group"]) }}'
+      user:  '{{ arweave["user"] | default(__arweave["user"]) }}'
+      installation_path: '{{ arweave["installation_path"] | default(__arweave["installation_path"]) }}'

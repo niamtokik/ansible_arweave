@@ -1,0 +1,15 @@
+__arweave:
+  facts:
+    mining:
+      cpu: 4
+      ram: 8000
+  repository: https://github.com/ArweaveTeam/arweave
+  branch: master
+  version: 2.7.3
+  user: arweave
+  group: arweave
+  installation_path: /opt
+  security:
+    limits:
+      nofile:
+        soft: 1000000
