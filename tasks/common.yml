@@ -30,3 +30,15 @@
       group: '{{ arweave["group"] | default(__arweave["group"]) }}'
       user:  '{{ arweave["user"] | default(__arweave["user"]) }}'
       installation_path: '{{ arweave["installation_path"] | default(__arweave["installation_path"]) }}'
+
+- name: Create .cache directory
+  ansible.builtin.file:
+    state: directory
+    path: '{{ installation_path }}/.cache'
+    owner: '{{ user }}'
+    group: '{{ group }}'
+    mode: '0750'
+  vars:
+      user:  '{{ arweave["user"] | default(__arweave["user"]) }}'
+      group: '{{ arweave["group"] | default(__arweave["group"]) }}'
+      installation_path: '{{ arweave["installation_path"] | default(__arweave["installation_path"]) }}'

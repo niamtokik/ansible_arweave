@@ -59,6 +59,44 @@ Where `playbook_arweave.yml` contains tasks to install arweave.
 | clone    | -            | yes          | -
 | compile  | -            | yes          | -
 
+## TODO
+
+ - [ ] Common
+   - [x] user creation
+   - [x] group creation
+   - [ ] custom data store
+ - [ ] Linux Configuation
+   - [x] file limits
+ - [x] Deployment from source with git
+   - [x] custom branch
+   - [x] custom directory
+ - [ ] Ubuntu support
+   - [ ] 24.04
+   - [x] 22.04
+   - [ ] 20.04
+ - [ ] Debian support
+   - [ ] 12
+   - [ ] 11
+ - [ ] Fedora support
+   - [ ] 40
+   - [ ] 39
+ - [ ] AlmaOS support
+   - [ ] 9
+   - [ ] 8
+ - [ ] CentOS support
+   - [ ] 9
+   - [ ] 8
+ - [ ] Rocky support
+   - [ ] 9
+   - [ ] 8
+ - [ ] FreeBSD
+ - [ ] OpenBSD
+ - [ ] NetBSD
+ - [ ] DragonFlyBSD
+
+The next step is to create packages infrastructure for all these
+systems.
+
 ## Tested Deployment
 
 | hosting company | cpu | ram | type  | os           | note |

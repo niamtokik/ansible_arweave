@@ -1,3 +1,6 @@
+######################################################################
+#
+######################################################################
 - name: Check if arweave must be installed
   ansible.builtin.fail:
     msg: "arweave variables is not set. can't deploy"
@@ -21,6 +24,9 @@
       and arweave['mining'] is defined
     )
 
+######################################################################
+# common tasks
+######################################################################
 - name: include common tasks
   ansible.builtin.include_tasks:
     file: common.yml
@@ -30,12 +36,35 @@
     file: linux/main.yml
   when: (ansible_facts['system'] == 'Linux')
 
+######################################################################
+# ubuntu related tasks
+######################################################################
 - name: include ubuntu tasks
   ansible.builtin.include_tasks:
     file: ubuntu/22.04/main.yml
   when: (ansible_facts['distribution'] == "Ubuntu" and
          ansible_facts['distribution_version'] == "22.04")
 
+- name: include ubuntu tasks
+  ansible.builtin.include_tasks:
+    file: ubuntu/24.04/main.yml
+  when: (ansible_facts['distribution'] == "Ubuntu" and
+         ansible_facts['distribution_version'] == "24.04" and
+         testing is defined)
+
+######################################################################
+# fedora related tasks
+######################################################################
+- name: include fedora tasks
+  ansible.builtin.include_tasks:
+    file: fedora/39/main.yml
+  when: (ansible_facts['distribution'] == "Fedora" and
+         ansible_facts['distribution_version'] == "39" and
+         testing is defined)
+
+######################################################################
+# installation from source
+######################################################################
 - name: include installation from source
   ansible.builtin.include_tasks:
     file: common_from_sources.yml
