@@ -1,5 +1,5 @@
 ######################################################################
-# Arweave Ansible Tasks, Ubuntu 22.04 compatible
+# Arweave Ansible Tasks, Debian 12 Compatible
 ######################################################################
 - name: Update APT packages repositories
   ansible.builtin.apt:
@@ -11,4 +11,4 @@
     state: latest
     pkg: '{{ packages }}'
   vars:
-      packages: '{{ __arweave_os["x86_64"]["ubuntu"]["22.04"]["packages"] }}'
+      packages: '{{ __arweave_os["x86_64"]["debian"]["12"]["packages"] }}'

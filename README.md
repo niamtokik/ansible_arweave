@@ -65,7 +65,7 @@ Where `playbook_arweave.yml` contains tasks to install arweave.
    - [x] user creation
    - [x] group creation
    - [ ] custom data store
- - [ ] Linux Configuation
+ - [ ] Linux Common Configuration
    - [x] file limits
  - [x] Deployment from source with git
    - [x] custom branch
@@ -74,12 +74,20 @@ Where `playbook_arweave.yml` contains tasks to install arweave.
    - [ ] 24.04
    - [x] 22.04
    - [ ] 20.04
+ - [ ] Windows Support
+   - [ ] Windows 11 
+   - [ ] Windows server 2022
+   - [ ] Windows server 2019
+   - [ ] Windows server 2016
+ - [ ] MacOS support
+   - [ ] MacOS server
  - [ ] Debian support
-   - [ ] 12
+   - [x] 12
    - [ ] 11
+   - [ ] 10
  - [ ] Fedora support
    - [ ] 40
-   - [ ] 39
+   - [ ] 39 (can't compile)
  - [ ] AlmaOS support
    - [ ] 9
    - [ ] 8
@@ -89,26 +97,54 @@ Where `playbook_arweave.yml` contains tasks to install arweave.
  - [ ] Rocky support
    - [ ] 9
    - [ ] 8
+ - [ ] ArchLinux
+ - [ ] AlpineLinux
+ - [ ] Gentoo
  - [ ] FreeBSD
  - [ ] OpenBSD
  - [ ] NetBSD
  - [ ] DragonFlyBSD
+ - [ ] Promtail logs support
 
 The next step is to create packages infrastructure for all these
 systems.
 
 ## Tested Deployment
 
-| hosting company | cpu | ram | type  | os           | note |
-|-----------------|-----|-----|-------|--------------|------|
-| hetzner         | 2   | 2GB | cpx11 | ubuntu 22.04 | crash (oom kill)
-| hetzner         | 3   | 4GB | cpx21 | ubuntu 22.04 | crash (oom kill)
-| hetzner         | 4   | 8GB | cpx31 | ubuntu 22.04 | no problem so far
+| cat | hosting company | cpu | ram  | type    | os           | note |
+|-----|-----------------|-----|------|---------|--------------|------|
+|  vm | hetzner         | 2   |  2GB |   cpx11 | ubuntu 22.04 | crash (oom kill)
+|  vm | hetzner         | 3   |  4GB |   cpx21 | ubuntu 22.04 | crash (oom kill)
+|  vm | hetzner         | 4   |  8GB |   cpx31 | ubuntu 22.04 | no problem so far
+|  vm | scaleway        | 2   |  2GB |  dev1-s | -
+|  vm | scaleway        | 3   |  4GG |  dev1-m | -
+|  vm | scaleway        | 4   |  8GB |  dev1-l | -
+|  vm | scaleway        | 4   | 12GB | dev1-xl | -
 
 ## Contributing
 
 All roles are set by OS version and release. Please tests these tasks
 before deploying.
+
+## FAQ
+
+### How to execute ansible-playblook without ansible host file?
+
+```sh
+ansible-playbook -i "${ip_address},"  -u root playbook_arweave.yml -C
+```
+
+### On Debian, python interpreter can't be found.
+
+On Debian, `python` does not exist and one should use
+`/usr/bin/python3` instead. The following environment variable can be
+added:
+
+```
+-e 'ansible_python_interpreter=/usr/bin/python3'
+```
+
+see https://docs.ansible.com/ansible/latest/reference_appendices/python_3_support.html
 
 ## References and Resources
 

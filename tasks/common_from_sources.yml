@@ -46,6 +46,26 @@
       installation_path: '{{ arweave["installation_path"] | default(__arweave["installation_path"]) }}'
       user: '{{ arweave["user"] | default(__arweave["user"]) }}'
 
+- name: Execute Arweave Unit Test
+  become: true
+  become_user: '{{ user }}'
+  ansible.builtin.shell:
+    chdir: '{{ installation_path }}/arweave'
+    cmd: ./rebar3 eunit
+  vars:
+      installation_path: '{{ arweave["installation_path"] | default(__arweave["installation_path"]) }}'
+      user: '{{ arweave["user"] | default(__arweave["user"]) }}'
+
+- name: Execute Arweave Common Test
+  become: true
+  become_user: '{{ user }}'
+  ansible.builtin.shell:
+    chdir: '{{ installation_path }}/arweave'
+    cmd: ./rebar3 ct
+  vars:
+      installation_path: '{{ arweave["installation_path"] | default(__arweave["installation_path"]) }}'
+      user: '{{ arweave["user"] | default(__arweave["user"]) }}'
+
 - name: Create Arweave release from sources
   become: true
   become_user: '{{ user }}'
@@ -55,3 +75,4 @@
   vars:
       installation_path: '{{ arweave["installation_path"] | default(__arweave["installation_path"]) }}'
       user: '{{ arweave["user"] | default(__arweave["user"]) }}'
+

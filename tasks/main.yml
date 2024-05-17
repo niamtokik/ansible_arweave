@@ -39,23 +39,53 @@
 ######################################################################
 # ubuntu related tasks
 ######################################################################
-- name: include ubuntu tasks
-  ansible.builtin.include_tasks:
-    file: ubuntu/22.04/main.yml
-  when: (ansible_facts['distribution'] == "Ubuntu" and
-         ansible_facts['distribution_version'] == "22.04")
-
-- name: include ubuntu tasks
+- name: include ubuntu 24.04 tasks
   ansible.builtin.include_tasks:
     file: ubuntu/24.04/main.yml
   when: (ansible_facts['distribution'] == "Ubuntu" and
          ansible_facts['distribution_version'] == "24.04" and
          testing is defined)
 
+- name: include ubuntu 22.04 tasks
+  ansible.builtin.include_tasks:
+    file: ubuntu/22.04/main.yml
+  when: (ansible_facts['distribution'] == "Ubuntu" and
+         ansible_facts['distribution_version'] == "22.04")
+
+- name: include ubuntu 20.04 tasks
+  ansible.builtin.include_tasks:
+    file: ubuntu/20.04/main.yml
+  when: (ansible_facts['distribution'] == "Ubuntu" and
+         ansible_facts['distribution_version'] == "20.04" and
+         testing is defined)
+
+######################################################################
+# debian related tasks
+######################################################################
+- name: include debian 12 tasks
+  ansible.builtin.include_tasks:
+    file: debian/12/main.yml
+  when: (ansible_facts['distribution'] == "Debian" and
+         ansible_facts['distribution_major_version'] == "12")
+
+- name: include debian 11 tasks
+  ansible.builtin.include_tasks:
+    file: debian/11/main.yml
+  when: (ansible_facts['distribution'] == "Debian" and
+         ansible_facts['distribution_major_version'] == "11" and
+         testing is defined)
+
+- name: include debian 10 tasks
+  ansible.builtin.include_tasks:
+    file: debian/10/main.yml
+  when: (ansible_facts['distribution'] == "Debian" and
+         ansible_facts['distribution_major_version'] == "10" and
+         testing is defined)
+
 ######################################################################
 # fedora related tasks
 ######################################################################
-- name: include fedora tasks
+- name: include fedora 39 tasks
   ansible.builtin.include_tasks:
     file: fedora/39/main.yml
   when: (ansible_facts['distribution'] == "Fedora" and

@@ -1,3 +1,6 @@
+######################################################################
+# default parameters
+######################################################################
 __arweave:
   facts:
     mining:
@@ -13,3 +16,114 @@ __arweave:
     limits:
       nofile:
         soft: 1000000
+
+######################################################################
+# custom values for architecture/os/version
+######################################################################
+__arweave_os:
+  x86_64:
+    debian:
+      "10":
+        packages:
+          - erlang
+          - rebar3
+          - libssl-dev
+          - libgmp-dev
+          - libsqlite3-dev
+          - libsqlite3-dev
+          - make
+          - cmake
+          - gcc
+          - g++
+          - git
+    debian:
+      "12":
+        packages:
+          - erlang
+          - rebar3
+          - libssl-dev
+          - libgmp-dev
+          - libsqlite3-dev
+          - libsqlite3-dev
+          - make
+          - cmake
+          - gcc
+          - g++
+          - git
+      "11":
+        packages:
+          - erlang
+          # - rebar3
+          - libssl-dev
+          - libgmp-dev
+          - libsqlite3-dev
+          - libsqlite3-dev
+          - make
+          - cmake
+          - gcc
+          - g++
+          - git
+    ubuntu:
+      "24.04":
+        packages:
+          - erlang
+          - rebar3
+          - libssl-dev
+          - libgmp-dev
+          - libsqlite3-dev
+          - libsqlite3-dev
+          - make
+          - cmake
+          - gcc
+          - g++
+          - git
+      "22.04":
+        packages:
+          - erlang
+          - rebar3
+          - libssl-dev
+          - libgmp-dev
+          - libsqlite3-dev
+          - libsqlite3-dev
+          - make
+          - cmake
+          - gcc
+          - g++
+          - git
+      "20.04":
+        packages:
+          - erlang
+          - libssl-dev
+          - libgmp-dev
+          - libsqlite3-dev
+          - libsqlite3-dev
+          - make
+          - cmake
+          - gcc
+          - g++
+          - git
+    fedora:
+      "39":
+        packages:
+          - erlang
+          - erlang-rebar3
+          - openssl-devel
+          - gmp-devel
+          - libsq3-devel
+          - make
+          - cmake
+          - gcc
+          - g++
+          - git
+      "40":
+        packages:
+          - erlang
+          - erlang-rebar3
+          - openssl-devel
+          - gmp-devel
+          - libsq3-devel
+          - make
+          - cmake
+          - gcc
+          - g++
+          - git

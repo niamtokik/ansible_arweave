@@ -2,23 +2,14 @@
 # Arweave Ansible Tasks, Fedora 39 compatible
 ######################################################################
 
-- name: Update APT packages repositories
-  ansible.builtin.apt:
+- name: Update DNF packages repositories
+  ansible.builtin.dnf:
     update_cache: yes
 
 - name: Install Arweave package dependencies
-  ansible.builtin.apt:
+  ansible.builtin.dnf:
     update_cache: yes
     state: latest
-    pkg:
-      - erlang
-      - rebar3
-      - libssl-dev
-      - libgmp-dev
-      - libsqlite3-dev
-      - libsqlite3-dev
-      - make
-      - cmake
-      - gcc
-      - g++
-      - git
+    pkg: '{{ packages }}'
+  vars:
+      package: '{{ __arweave_os["x86_64"]["fedora"]["39"]["packages"] }}'

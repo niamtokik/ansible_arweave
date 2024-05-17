@@ -1,0 +1,10 @@
+######################################################################
+# Arweave Ansible tasks, OpenBSD 7.5
+######################################################################
+- name: Install Arweave Package Dependencies
+  ansible.buitin.package:
+    pkg:
+      - erlang
+      - gmake
+      - git
+      - erl25-rebar3

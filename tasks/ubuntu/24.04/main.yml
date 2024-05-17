@@ -1,8 +1,7 @@
 ######################################################################
 # Arweave Ansible Tasks, Ubuntu 24.04 compatible
 ######################################################################
-
-- name: Update APT packages repositories
+  - name: Update APT packages repositories
   ansible.builtin.apt:
     update_cache: yes
 
@@ -10,15 +9,6 @@
   ansible.builtin.apt:
     update_cache: yes
     state: latest
-    pkg:
-      - erlang
-      - rebar3
-      - libssl-dev
-      - libgmp-dev
-      - libsqlite3-dev
-      - libsqlite3-dev
-      - make
-      - cmake
-      - gcc
-      - g++
-      - git
+    pkg: '{{ packages }}'
+  vars:
+      packages: '{{ __arweave_os["x86_64"]["ubuntu"]["24.04"]["packages"] }}'
